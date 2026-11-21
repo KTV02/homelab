@@ -13,8 +13,8 @@ It covers a **Raspberry Pi 5 main server** at home and a **Raspberry Pi 3B edge 
 |---|---|---|
 | Platform | Raspberry Pi 5 (8 GB, ARM64, Debian 13) + Raspberry Pi 3B | systemd services and Docker Compose stacks side by side |
 | Remote access | WireGuard-based VPN mesh (Tailscale) | **Zero ports exposed to the internet**, TLS for every web UI |
-| Storage | 2× NVMe, 3× HDD, external SSD | Tiered storage with mergerfs (fast NVMe tier, large HDD tier) |
-| Applications | Jellyfin, PdfSearch, mail archive, forest hut dashboard, Node-RED | Several self-developed applications |
+| Storage | 2× NVMe, 3× HDD, external SSD | Tiered media storage with mergerfs, dedicated HDD for cloud storage |
+| Applications | Jellyfin, OpenCloud, PdfSearch, mail archive, forest hut dashboard, Node-RED | Several self-developed applications |
 | Automation | Node-RED job coordinator | Schedules heavy jobs around media playback with locks and heartbeats |
 | IoT | Temperature/humidity sensor, PIR, camera, smart relay | Autonomous frost protection heating at the hut |
 | Backup | restic, encrypted | Versioned online repository + offline copy on a disconnected SSD |
@@ -37,6 +37,7 @@ flowchart TB
             Jelly["Jellyfin<br/>media server"]
             Pdf["PdfSearch<br/>document search (OCR)"]
             Mail["Mail archive<br/>IMAP + webmail"]
+            Cloud["OpenCloud<br/>files + mobile apps"]
             Dash["Forest hut dashboard"]
         end
         subgraph Ops["Operations"]
@@ -84,6 +85,7 @@ Web applications bind to the loopback interface. The VPN mesh provides a TLS end
 | Service | Type | Description |
 |---|---|---|
 | [Jellyfin](docs/services/jellyfin.md) | Off-the-shelf | Personal media server for my own films, series, music and audiobooks |
+| [OpenCloud](docs/services/opencloud.md) | Off-the-shelf, custom deployment | Personal cloud storage with web UI and mobile apps, three access gates and a CPU governor that protects media playback |
 | [PdfSearch](docs/services/pdfsearch.md) | **Self-developed** | OCR, full-text indexing and search for PDF documents ([source](https://github.com/KTV02/Pdf-SearchEngine)) |
 | [Mail archive](docs/services/mail-archive.md) | **Self-developed** | Tamper-evident long-term archive of my mailboxes, served read-only via IMAP and webmail |
 | [Forest hut IoT](docs/services/forest-hut.md) | **Self-developed** | Sensor logging, camera, and autonomous frost protection heating at a remote site |
@@ -92,9 +94,9 @@ Web applications bind to the loopback interface. The VPN mesh provides a TLS end
 
 ## Skills demonstrated
 
-- **Linux system administration**: Debian on ARM, systemd units and timers, journald, users and permissions, sudo scoping
+- **Linux system administration**: Debian on ARM, systemd units, timers and resource control (cgroups), journald, users and permissions, sudo scoping
 - **Containers**: Docker Compose, hardened containers (non-root, read-only root FS, dropped capabilities, `no-new-privileges`), internal networks
-- **Networking**: VPN mesh design, reverse proxying with TLS, loopback-only binding, host and container firewalling for IPv4 and IPv6
+- **Networking**: VPN mesh design, reverse proxying with TLS, identity-aware access control, OpenID Connect, loopback-only binding, host and container firewalling for IPv4 and IPv6
 - **Storage**: ext4, union filesystems (mergerfs), capacity planning, SMART monitoring
 - **Backup and DR**: encrypted, deduplicated, versioned backups, offline copies, restore testing
 - **Automation**: Node-RED flows, REST APIs, job queues with locks and heartbeats

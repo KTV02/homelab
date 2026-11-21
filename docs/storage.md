@@ -6,7 +6,8 @@
 |---|---|---|
 | System | NVMe SSD | OS, application code, databases, mail archive data |
 | Fast tier | NVMe SSD | Recently added media, working and temporary data |
-| Capacity tier | 8 TB HDD (+ spare HDDs) | Long-term media library, online backup repository |
+| Capacity tier | 8 TB HDD (+ spare HDD) | Long-term media library, online backup repository |
+| Cloud storage | 2 TB HDD | Dedicated disk for [OpenCloud](services/opencloud.md) files, uploads and buffers |
 | Offline | Portable SSD | Encrypted offline backup copy, disconnected between runs |
 
 The internal disks use ext4. The Pi boots from NVMe; the SD card is not part of the running system.

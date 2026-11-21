@@ -9,7 +9,8 @@
 | System disk | 1 TB NVMe SSD (OS, applications, databases) |
 | Fast data disk | 1 TB NVMe SSD (hot media tier, working data) |
 | Capacity disk | 8 TB NAS-grade HDD (Seagate IronWolf) |
-| Additional disks | 2 TB and 1 TB HDDs (spare capacity) |
+| Cloud storage disk | 2 TB HDD dedicated to OpenCloud |
+| Additional disk | 1 TB HDD (spare capacity) |
 | Offline backup disk | 1 TB portable SSD, connected only for backup runs |
 | Network | Wired Gigabit Ethernet |
 

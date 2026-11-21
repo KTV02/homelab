@@ -3,6 +3,7 @@
 Notable changes to the homelab (infrastructure, services, practices). Newest first.
 
 ## 2026-11
+- Added OpenCloud as personal cloud storage on a dedicated HDD, replacing the previous file server (identity-aware ingress, OpenID Connect, playback-aware CPU governor)
 - Controlled container image updater with dry-run mode
 - Storage: fixed free-space accounting of the fast tier and cleaned up unused data
 

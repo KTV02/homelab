@@ -57,7 +57,7 @@ sequenceDiagram
 - Active playback blocks new matching jobs; cooperative running jobs get a pause or cancel signal.
 - Jellyfin itself is never stopped, restarted or throttled.
 - The coordinator only *observes* system services and containers; it imposes no blanket CPU/RAM limits.
-- Independent safety mechanisms (storage watchdog, backup playback guard) work without the coordinator, so it is not a single point of failure.
+- Independent safety mechanisms (storage watchdog, backup playback guard, the [OpenCloud](opencloud.md) resource governor) work without the coordinator, so it is not a single point of failure.
 
 ## Security
 

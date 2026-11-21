@@ -3,6 +3,7 @@
 | Service | Type | Runtime | Page |
 |---|---|---|---|
 | Jellyfin | Off-the-shelf | Native systemd service | [jellyfin.md](jellyfin.md) |
+| OpenCloud | Off-the-shelf, custom deployment | Native systemd services | [opencloud.md](opencloud.md) |
 | PdfSearch | Self-developed | Docker Compose | [pdfsearch.md](pdfsearch.md) |
 | Mail archive | Self-developed | Docker Compose | [mail-archive.md](mail-archive.md) |
 | Forest hut IoT | Self-developed | Native services on both Pis | [forest-hut.md](forest-hut.md) |

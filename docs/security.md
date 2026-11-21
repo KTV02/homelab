@@ -10,7 +10,7 @@ flowchart TB
     L2["2. VPN mesh<br/>only enrolled, authenticated devices"]
     L3["3. Host firewall<br/>default deny, IPv4 + IPv6, Docker-aware"]
     L4["4. Service binding<br/>loopback only, TLS proxy in front"]
-    L5["5. Application auth<br/>logins, roles, per-client tokens, origin checks"]
+    L5["5. Application auth<br/>identity-aware ingress, logins, roles,<br/>per-client tokens, origin checks"]
     L6["6. Container hardening<br/>non-root, read-only FS, no capabilities"]
     L7["7. Data protection<br/>encrypted backups, offline copy, integrity checks"]
     L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
@@ -29,6 +29,7 @@ flowchart TB
 - Media parsers and file processors run unprivileged; only a minimal helper performs privileged file operations.
 - Administrative `sudo` requires interactive authentication; automation gets narrowly scoped exceptions, not blanket rights.
 - Automated clients of the job coordinator have their own tokens and may only manage their own jobs.
+- Where it adds value, access is tied to the verified mesh identity of the user, not just to the device (e.g. [OpenCloud](services/opencloud.md) admits only approved mesh users before its own login).
 
 **Segmentation**
 - Each application stack has its own container network.

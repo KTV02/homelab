@@ -72,7 +72,7 @@ Two independent gates protect every application: only authenticated mesh peers r
 
 | Layer | Used for |
 |---|---|
-| Native systemd services | Jellyfin (direct hardware access), Node-RED, forest hut dashboard, hut API |
+| Native systemd services | Jellyfin (direct hardware access), OpenCloud, Node-RED, forest hut dashboard, hut API |
 | Docker Compose stacks | PdfSearch, mail archive and further application stacks |
 | systemd timers | Backups, watchdogs, scans, maintenance jobs |
 | Node-RED | Coordination of heavy jobs, notification flows |

@@ -13,6 +13,7 @@
 | Security bulletin flow | VPN vendor security bulletins (RSS), deduplicated |
 | Application health endpoints | Mail archive integrity, hut node sensors / camera / heating controller |
 | Antivirus | Documents added to PdfSearch are virus-scanned (ClamAV) |
+| Service health dashboard | Status of all services, including OpenCloud throttling |
 
 ## Alert flow
 
