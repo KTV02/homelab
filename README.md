@@ -30,7 +30,7 @@ flowchart TB
     end
     TV["TV on the home LAN"]
 
-    Proxy["Private VPN mesh<br/>WireGuard + TLS proxy"]
+    Proxy["TLS proxy<br/>over private VPN mesh"]
 
     subgraph Home["Home site: Raspberry Pi 5"]
         subgraph Apps["Applications (loopback only)"]
@@ -39,6 +39,10 @@ flowchart TB
             Mail["Mail archive<br/>IMAP + webmail"]
             Cloud["OpenCloud<br/>files + mobile apps"]
             Dash["Forest hut dashboard"]
+        end
+        subgraph DNS["Private DNS"]
+            Forwarder["CoreDNS forwarder"]
+            PiHole["Pi-hole<br/>DNS filtering"]
         end
         subgraph Ops["Operations"]
             NR["Node-RED<br/>job coordinator"]
@@ -56,6 +60,9 @@ flowchart TB
     Chat["Private alert channel"]
 
     Clients --> Proxy --> Apps
+    Clients -->|DNS over private VPN| Forwarder
+    Forwarder -->|Loopback DNS| PiHole
+    Proxy -->|Admin HTTPS| PiHole
     TV -- "LAN exception" --> Jelly
     Dash -- "polls over VPN" --> API --- Dev
     Apps --- Store -. "configs + app data" .-> Bak
@@ -63,7 +70,7 @@ flowchart TB
     Mon -. "alerts" .-> Chat
 ```
 
-Web applications bind to the loopback interface. The VPN mesh provides a TLS endpoint for each of them that is reachable only from authenticated devices in my private network. The one deliberate exception is the media server, which TVs on the home LAN can reach directly. Nothing is published to the public internet.
+Web applications bind to the loopback interface. The VPN mesh provides a TLS endpoint for each of them that is reachable only from authenticated devices in my private network. The one deliberate exception is the media server, which TVs on the home LAN can reach directly. Nothing is published to the public internet. Authorized VPN clients send DNS queries to CoreDNS, which forwards them to Pi-hole on loopback.
 
 ## Documentation
 
@@ -91,6 +98,7 @@ Web applications bind to the loopback interface. The VPN mesh provides a TLS end
 | [Mail archive](docs/services/mail-archive.md) | **Self-developed** | Tamper-evident long-term archive of my mailboxes, served read-only via IMAP and webmail |
 | [Forest hut IoT](docs/services/forest-hut.md) | **Self-developed** | Sensor logging, camera, and autonomous frost protection heating at a remote site |
 | [Job coordinator](docs/services/job-coordinator.md) | **Self-developed** (Node-RED) | Central scheduler for heavy background jobs |
+| [Pi-hole](docs/dns-filtering.md) | Off-the-shelf, custom deployment | Private DNS filtering with account-based access and tested failover |
 | [Monitoring](docs/monitoring.md) | Off-the-shelf + custom | Netdata, watchdogs, security bulletin feed, container CVE scans |
 
 ## Skills demonstrated
