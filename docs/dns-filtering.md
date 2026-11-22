@@ -1,9 +1,24 @@
-# Private DNS filtering
+# Pi-hole over Tailscale
 
-A separate Pi-hole v6 Compose stack provides DNS filtering for authorized VPN clients. It uses HaGeZi Multi NORMAL as its single DNS list. uBlock Origin continues to handle page-level filtering in supported browsers. A legitimate redirect on a blocked hostname can be restored with a narrow allow rule after reproducing the problem.
+I run Pi-hole v6 in Docker Compose on the home Raspberry Pi. It uses HaGeZi Multi NORMAL to block requests for known ad and tracking domains from authorized Tailscale devices.
 
-Pi-hole stays on loopback. A DNS forwarder on the same host binds to the VPN interface address. An interface firewall rule and the VPN's account-based access policy limit access, and the password-protected admin UI uses private VPN HTTPS. The LAN and server workloads keep their usual DNS paths. MagicDNS continues to resolve private device names. The private homelab overview links to the admin page, and the service checker tracks the forwarder, the container's health, and the login endpoint.
+## How a DNS request flows
 
-The forwarder gives Pi-hole priority and uses a public resolver over authenticated HTTPS if Pi-hole fails. Filtering pauses during fallback and resumes after recovery. A whole-host or VPN outage needs a resolver on the client for automatic fallback, or a manual DNS switch on clients without one. Advertising a public resolver alongside the private resolver can maintain ordinary lookups during a host outage when the public resolver is reachable. Clients can also use it during normal operation, so filtering is best-effort in that arrangement.
+1. A device sends a DNS query over Tailscale to CoreDNS, a forwarder on the Pi.
+2. CoreDNS passes the query to Pi-hole on the same machine.
+3. For a listed domain, Pi-hole replies with an address the device cannot use to reach the ad or tracker. For other domains, Pi-hole looks up the address through its upstream DNS resolver.
 
-[Tailscale DNS behavior](https://tailscale.com/docs/reference/dns-in-tailscale) · [CoreDNS forwarding](https://coredns.io/plugins/forward/)
+MagicDNS continues to resolve Tailscale device names. Devices on the home LAN have their own DNS settings.
+
+## What happens during an outage
+
+| Situation | What the device can expect |
+| --- | --- |
+| Pi-hole stops responding while the Pi is online | CoreDNS tries Google Public DNS over HTTPS. Queries sent to Google during the outage bypass filtering. CoreDNS resumes using Pi-hole when it recovers. |
+| The Pi or the route to it is unavailable | Tailscale also provides Google as a separate resolver. A device can still resolve ordinary domains if it can reach Google directly. |
+
+Tailscale can query both advertised resolvers at the same time. Google can answer first even while Pi-hole is healthy, so this setup favors DNS availability and filtering is best-effort. [Tailscale resolver ordering](https://tailscale.com/docs/reference/dns-in-tailscale#the-order-of-dns-resolvers) · [CoreDNS forwarding](https://coredns.io/plugins/forward/)
+
+## Access and monitoring
+
+CoreDNS accepts queries on the Tailscale interface. The firewall and Tailscale access policy restrict who can reach it. Pi-hole stays on loopback, and its password-protected admin page is available over private HTTPS from the homelab overview. The service checker monitors the forwarder, the container's health, and the admin login endpoint.
