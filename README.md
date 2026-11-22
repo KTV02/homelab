@@ -78,6 +78,7 @@ Web applications bind to the loopback interface. The VPN mesh provides a TLS end
 | Backup and recovery | [docs/backup-recovery.md](docs/backup-recovery.md) |
 | Monitoring and alerting | [docs/monitoring.md](docs/monitoring.md) |
 | Security principles | [docs/security.md](docs/security.md) |
+| Private DNS filtering | [docs/dns-filtering.md](docs/dns-filtering.md) |
 | Roadmap / Changelog | [ROADMAP.md](ROADMAP.md) / [CHANGELOG.md](CHANGELOG.md) |
 
 ### Services
