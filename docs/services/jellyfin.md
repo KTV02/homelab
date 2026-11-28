@@ -1,6 +1,6 @@
 # Jellyfin
 
-> Personal media server for my own film, series, music and audiobook collection, streamed to TV, phone and laptop.
+> Personal media server for my own videos, openly licensed films and DRM-free music and audiobooks, streamed to TV, phone and laptop.
 
 | | |
 |---|---|

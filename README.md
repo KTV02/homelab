@@ -92,7 +92,7 @@ Web applications bind to the loopback interface. The VPN mesh provides a TLS end
 
 | Service | Type | Description |
 |---|---|---|
-| [Jellyfin](docs/services/jellyfin.md) | Off-the-shelf | Personal media server for my own films, series, music and audiobooks |
+| [Jellyfin](docs/services/jellyfin.md) | Off-the-shelf | Personal media server for my own videos, openly licensed films and DRM-free music and audiobooks |
 | [OpenCloud](docs/services/opencloud.md) | Off-the-shelf, custom deployment | Personal cloud storage with web UI and mobile apps, three access gates and a CPU governor that protects media playback |
 | [PdfSearch](docs/services/pdfsearch.md) | **Self-developed** | OCR, full-text indexing and search for PDF documents ([source](https://github.com/KTV02/Pdf-SearchEngine)) |
 | [Mail archive](docs/services/mail-archive.md) | **Self-developed** | Tamper-evident long-term archive of my mailboxes, served read-only via IMAP and webmail |
